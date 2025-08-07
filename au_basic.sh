@@ -105,6 +105,9 @@ au.watch(){
     watch -n 1 "$1"
 }
 
+
+# help
+
 au.basic.help(){
     echo "=== Basic Commands ==="
     echo "Navigation aliases:"
@@ -127,5 +130,3 @@ au.basic.help(){
     echo "=== Help ==="
     echo "au.basic.help                      - Show this command list"
 }
-
-# help
