@@ -7,6 +7,12 @@ incs+="au_wifi.sh "
 incs+="au_net.sh "
 incs+="au_proxy.sh "
 incs+="au_clear.sh "
+incs+="au_find.sh "
+incs+="au_grep.sh "
+incs+="au_tar.sh "
+incs+="au_tree.sh "
+incs+="au_info.sh "
+incs+="au_git.sh "
 
 for inc in $incs; do
     if [ -f "$inc" ]; then
@@ -31,10 +37,12 @@ au.test(){
 }
 
 au.source(){
-    ret=$(__is_file ~/ws/mygit/au_alias/au_alias.sh)
+    SH_DIR="/home/user/ws/mygit/au_alias/au_alias.sh"
+
+    ret=$(__is_file $SH_DIR)
     if test "$ret" != "0"; then echo $ret; return; fi
 
-    source ~/ws/mygit/au_alias/au_alias.sh
+    source $SH_DIR
 }
 
 au.fnmode(){
@@ -42,18 +50,15 @@ au.fnmode(){
 }
 
 au.maxwin(){
-    ret=$(__is_file ~/scripts/maxwin.sh)
+    SH_DIR="/home/user/scripts/maxwin.sh"
+
+    ret=$(__is_file $SH_DIR)
     if test "$ret" != "0"; then echo $ret; return; fi
 
-    ~/scripts/maxwin.sh
+    $SH_DIR
 }
 
 au.ssh(){
     ssh user@192.168.61.28
 }
-
-
-
-
-
 
