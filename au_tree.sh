@@ -19,3 +19,13 @@ au.tree.file(){
     -e "s/├  │/│  │/g" \
     -e '$s/├/└/'
 }
+
+# help
+au.tree.help(){
+    echo "=== Tree Commands ==="
+    echo "au.tree                        - Show directory tree"
+    echo "au.tree.file <path>             - Show directory tree with file paths"
+    echo ""
+    echo "=== Help ==="
+    echo "au.tree.help                   - Show this command list"
+}

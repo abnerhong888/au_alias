@@ -60,3 +60,15 @@ EOL
     rm $CFG_NAME -f
     clear
 }
+
+# help
+au.pxy.help(){
+    echo "=== Proxy Commands ==="
+    echo "au.pxy.list <ip/24>                 - List open ports on a subnet"
+    echo "au.pxy.grep <ip/24>                 - List open ports on a subnet and grep for open ports"
+    echo "au.3pxy <user> <password>           - Start 3proxy server with specified user and password"
+    echo "                                     Example: au.3pxy user password"
+    echo ""
+    echo "=== Help ==="
+    echo "au.pxy.help                        - Show this command list"
+}

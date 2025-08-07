@@ -45,3 +45,17 @@ au.tar.list.layer(){
 
     tar -tf $1 | cut -d/ -f1-$2 | sort -u
 }
+
+# help
+au.tar.help(){
+    echo "=== Tar Commands ==="
+    echo "au.tar <folder/file>               - Create tar.gz file"
+    echo "au.tar.to <folder/file> <to path>  - Create tar.gz file in specified path"
+    echo "au.tar.extract <file>              - Extract tar.gz file"
+    echo "au.tar.extract.to <file> <to path> - Extract tar.gz file to specified path"
+    echo "au.tar.list <file>                 - List files in tar.gz file"
+    echo "au.tar.list.layer <file> <layer>   - List files in specified layer of tar.gz file"
+    echo ""
+    echo "=== Help ==="
+    echo "au.tar.help                        - Show this command list"
+}

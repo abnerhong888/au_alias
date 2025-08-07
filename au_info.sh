@@ -35,3 +35,17 @@ au.info.linux(){
     echo -------------------------- cat /etc/issue
     cat /etc/issue
 }
+
+# help
+au.info.help(){
+    echo "=== System Info Commands ==="
+    echo "au.info.cpu                        - Show CPU information (/proc/cpuinfo)"
+    echo "au.info.cpu.temp                   - Show CPU temperature"
+    echo "au.info.memory                     - Show memory usage (free -h)"
+    echo "au.info.fsize <folder>             - Show folder size (du -sh)"
+    echo "au.info.linux                     - Show comprehensive Linux system info"
+    echo "                                     Includes: uname, lsb_release, os-release, issue"
+    echo ""
+    echo "=== Help ==="
+    echo "au.info.help                       - Show this command list"
+}

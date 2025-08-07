@@ -59,3 +59,22 @@ au.wi.lowp.reset(){
     sudo nmcli connection modify "$WIFI_NAME" ipv4.route-metric 600
     au.wi.recn
 }
+
+# help
+au.wi.help(){
+    echo "=== WiFi Commands ==="
+    echo "au.wi.on                       - Turn on WiFi"
+    echo "au.wi.off                      - Turn off WiFi"
+    echo "au.wi.list                     - List available WiFi networks"
+    echo "au.wi.cn <name>                - Connect to a WiFi network"
+    echo "au.wi.ip                       - Show IP address of connected WiFi interface"
+    echo "au.wi.gateway                  - Show gateway of connected WiFi interface"
+    echo "au.wi.name                     - Show name of connected WiFi interface"
+    echo "au.wi.info                     - Show detailed information of connected WiFi interface"
+    echo "au.wi.recn                     - Reconnect to the current WiFi network"
+    echo "au.wi.lowp                     - Set WiFi connection to lowest priority"
+    echo "au.wi.lowp.reset               - Reset WiFi connection priority to default"
+    echo ""
+    echo "=== Help ==="
+    echo "au.wi.help                     - Show this command list"
+}

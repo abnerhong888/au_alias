@@ -54,3 +54,18 @@ au.find.file(){
         done
     fi
 }
+
+# help
+au.find.help(){
+    echo "=== Find Commands ==="
+    echo "au.find.dir [path]                 - Find directories with full paths"
+    echo "                                     No args: find all dirs in current directory"
+    echo "                                     With args: find dirs in specified paths"
+    echo ""
+    echo "au.find.file [path]                - Find files with full paths"
+    echo "                                     No args: find all files in current directory"
+    echo "                                     With args: find files in specified paths"
+    echo ""
+    echo "=== Help ==="
+    echo "au.find.help                       - Show this command list"
+}

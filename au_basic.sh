@@ -104,3 +104,28 @@ au.watch(){
 
     watch -n 1 "$1"
 }
+
+au.basic.help(){
+    echo "=== Basic Commands ==="
+    echo "Navigation aliases:"
+    echo "..                                 - cd .."
+    echo "...                                - cd ../.."
+    echo "....                               - cd ../../.."
+    echo ".....                              - cd ../../../.."
+    echo "......                             - cd ../../../../.."
+    echo ".......                            - cd ../../../../../.."
+    echo "........                           - cd ../../../../../../.."
+    echo ".........                          - cd ../../../../../../../.."
+    echo ""
+    echo "File listing:"
+    echo "au.ll [path]                       - List files with full paths (enhanced ls -la)"
+    echo "au.ls [path]                       - List files with full paths (enhanced ls -l)"
+    echo ""
+    echo "System monitoring:"
+    echo "au.watch <command>                 - Watch command output (refresh every 1s)"
+    echo ""
+    echo "=== Help ==="
+    echo "au.basic.help                      - Show this command list"
+}
+
+# help
