@@ -130,8 +130,12 @@ au.git.log(){
     git log
 }
 
+au.git.log.oneline(){
+    git log --oneline --all --decorate
+}
+
 au.git.log.graph(){
-    git log --graph --oneline --all
+    git log --oneline --graph --decorate --all --branches=main
 }
 
 au.git.rebase(){
