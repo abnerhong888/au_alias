@@ -63,6 +63,59 @@ EOL
     clear
 }
 
+au.pxy.chrome(){
+    ret=$(__is_empty_args $# "${FUNCNAME[0]} <user:password@ip>")
+    if test "$ret" != "0"; then echo $ret; return; fi
+
+    google-chrome --proxy-server="http://$1:3128"
+    history -c
+    clear
+}
+
+au.pxy.vscode(){
+    ret=$(__is_empty_args $# "${FUNCNAME[0]} <user:password@ip>")
+    if test "$ret" != "0"; then echo $ret; return; fi
+
+    if [ ! -d "/tmp/code" ]; then
+        mkdir -p /tmp/my_temp_code
+        cp ~/.config/Code/* /tmp/my_temp_code -rf
+    fi
+
+    clear
+    __edit_settings $1 0
+
+    code $2 --wait --user-data-dir=/tmp/my_temp_code
+    
+    __edit_settings $1 1
+    history -c
+    clear
+}
+
+__edit_settings(){
+    SETTING_FILE="/tmp/my_temp_code/User/settings.json"
+    
+    if ! grep -q '"http.proxyStrictSSL":' $SETTING_FILE; then
+        sed -i 's/{/{\n    "http.proxyStrictSSL": false,/' $SETTING_FILE
+    fi
+    
+    if ! grep -q '"http.proxy":' $SETTING_FILE; then
+        sed -i 's/{/{\n    "http.proxy": "",/' $SETTING_FILE
+    fi
+
+    VAL="\"http://$1:3128\""  # Properly escaped quotes for JSON
+    SEARCH_VAR='"http.proxy": "",'  # What to search for
+    REPLACE_VAR="\"http.proxy\": \"$VAL\","  # Replacement with variable
+
+    if [ "$2" = "0" ]; then
+        # Enable proxy by replacing empty with value
+        sed -i "s|${SEARCH_VAR}|\"http.proxy\": ${VAL},|g" "$SETTING_FILE"
+    elif [ "$2" = "1" ]; then
+        # Disable proxy by replacing value with empty
+        sed -i "s|\"http.proxy\": ${VAL},|${SEARCH_VAR}|g" "$SETTING_FILE"
+    fi
+}
+
+
 # help
 au.pxy.help(){
     echo "=== Proxy Commands ==="
@@ -70,6 +123,14 @@ au.pxy.help(){
     echo "au.pxy.grep <ip/24>                 - List open ports on a subnet and grep for open ports"
     echo "au.3pxy <user> <password>           - Start 3proxy server with specified user and password"
     echo "                                     Example: au.3pxy user password"
+    echo ""
+    echo "=== Chrome ==="
+    echo "au.pxy.chrome <user:password@ip>   - Open chrome with proxy"
+    echo "                                     Example: au.pxy.chrome user:password@ip"
+    echo ""
+    echo "=== VSCode ==="
+    echo "au.pxy.vscode <user:password@ip>   - Open vscode with proxy"
+    echo "                                     Example: au.pxy.vscode user:password@ip"
     echo ""
     echo "=== Help ==="
     echo "au.pxy.help                        - Show this command list"
