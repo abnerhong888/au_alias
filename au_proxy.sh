@@ -7,14 +7,14 @@
 # start
 
 au.pxy.list(){
-    ret=$(__is_empty_args $# "${FUNCNAME[0]} <ip/24>")
+    local ret=$(__is_empty_args $# "${FUNCNAME[0]} <ip/24>")
     if test "$ret" != "0"; then echo $ret; return; fi
     
     nmap -p 3128,8080,8888,1080 $1
 }
 
 au.pxy.grep(){
-    ret=$(__is_empty_args $# "${FUNCNAME[0]} <ip/24>")
+    local ret=$(__is_empty_args $# "${FUNCNAME[0]} <ip/24>")
     if test "$ret" != "0"; then echo $ret; return; fi
 
     nmap -p 3128,8080,8888,1080 $1 | grep -E 'Nmap scan report|open'
@@ -22,11 +22,11 @@ au.pxy.grep(){
 
 
 au.3pxy(){
-    PROXY_DIR="/home/user/ws/3proxy/bin"
-    PROXY_EXE="$PROXY_DIR/3proxy"
-    CFG_NAME="3proxy.cfg"
+    local PROXY_DIR="/home/user/ws/3proxy/bin"
+    local PROXY_EXE="$PROXY_DIR/3proxy"
+    local CFG_NAME="3proxy.cfg"
 
-    ret=$(__is_file $PROXY_EXE)
+    local ret=$(__is_file $PROXY_EXE)
     if test "$ret" != "0"; then echo $ret; return; fi
 
     ret=$(__is_empty_args $# "${FUNCNAME[0]} <user> <password>")
@@ -51,7 +51,7 @@ EOL
     clear
     # Run proxy in background
     sudo $PROXY_EXE $CFG_NAME &
-    PROXY_PID=$!
+    local PROXY_PID=$!
     
     # Wait for proxy and handle interruption
     set +m # Disables job control notifications
@@ -64,7 +64,7 @@ EOL
 }
 
 au.pxy.chrome(){
-    ret=$(__is_empty_args $# "${FUNCNAME[0]} <user:password@ip>")
+    local ret=$(__is_empty_args $# "${FUNCNAME[0]} <user:password@ip>")
     if test "$ret" != "0"; then echo $ret; return; fi
 
     google-chrome --proxy-server="http://$1:3128"
@@ -73,7 +73,7 @@ au.pxy.chrome(){
 }
 
 au.pxy.vscode(){
-    ret=$(__is_empty_args $# "${FUNCNAME[0]} <user:password@ip>")
+    local ret=$(__is_empty_args $# "${FUNCNAME[0]} <user:password@ip>")
     if test "$ret" != "0"; then echo $ret; return; fi
 
     if [ ! -d "/tmp/code" ]; then
@@ -92,7 +92,7 @@ au.pxy.vscode(){
 }
 
 __edit_settings(){
-    SETTING_FILE="/tmp/my_temp_code/User/settings.json"
+    local SETTING_FILE="/tmp/my_temp_code/User/settings.json"
     
     if ! grep -q '"http.proxyStrictSSL":' $SETTING_FILE; then
         sed -i 's/{/{\n    "http.proxyStrictSSL": false,/' $SETTING_FILE
@@ -102,9 +102,9 @@ __edit_settings(){
         sed -i 's/{/{\n    "http.proxy": "",/' $SETTING_FILE
     fi
 
-    VAL="\"http://$1:3128\""  # Properly escaped quotes for JSON
-    SEARCH_VAR='"http.proxy": "",'  # What to search for
-    REPLACE_VAR="\"http.proxy\": \"$VAL\","  # Replacement with variable
+    local VAL="\"http://$1:3128\""  # Properly escaped quotes for JSON
+    local SEARCH_VAR='"http.proxy": "",'  # What to search for
+    local REPLACE_VAR="\"http.proxy\": \"$VAL\","  # Replacement with variable
 
     if [ "$2" = "0" ]; then
         # Enable proxy by replacing empty with value

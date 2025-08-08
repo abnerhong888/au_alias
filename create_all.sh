@@ -4,6 +4,7 @@
 
 FILE_NAME="au_alias_one.sh"
 ALIAS_FILE="au_alias.sh"
+
 get_line(){
     grep -n "$1" $2 | cut -d':' -f1
 }
@@ -30,6 +31,8 @@ write_line ""
 write_line "# define"
 
 get_lines define include $ALIAS_FILE >> $FILE_NAME
+
+sed -i s/au_alias.sh/au_alias_one.sh/ $FILE_NAME
 
 # get all sourced sh file define
 get_lines include start $ALIAS_FILE | while read -r line; do

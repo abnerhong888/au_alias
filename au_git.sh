@@ -7,7 +7,7 @@
 # start
 
 au.git.set.user(){
-    ret=$(__is_empty_args $# "${FUNCNAME[0]} <name> <email>")
+    local ret=$(__is_empty_args $# "${FUNCNAME[0]} <name> <email>")
     if test "$ret" != "0"; then echo $ret; return; fi
 
     git config --global user.name "$1"
@@ -54,14 +54,14 @@ au.git.config.edit(){
 
 
 au.git.clone(){
-    ret=$(__is_empty_args $# "${FUNCNAME[0]} <url>")
+    local ret=$(__is_empty_args $# "${FUNCNAME[0]} <url>")
     if test "$ret" != "0"; then echo $ret; return; fi
 
     git clone $1
 }
 
 au.git.add(){
-    ret=$(__is_empty_args $# "${FUNCNAME[0]} <file>")
+    local ret=$(__is_empty_args $# "${FUNCNAME[0]} <file>")
     if test "$ret" != "0"; then echo $ret; return; fi
 
     git add $1
@@ -76,14 +76,14 @@ au.git.add.untracked(){
 }
 
 au.git.commit(){
-    ret=$(__is_empty_args $# "${FUNCNAME[0]} <message>")
+    local ret=$(__is_empty_args $# "${FUNCNAME[0]} <message>")
     if test "$ret" != "0"; then echo $ret; return; fi
 
     git commit -m "$1"
 }
 
 au.git.commit.all(){
-    ret=$(__is_empty_args $# "${FUNCNAME[0]} <message>")    
+    local ret=$(__is_empty_args $# "${FUNCNAME[0]} <message>")    
     if test "$ret" != "0"; then echo $ret; return; fi
 
     git commit -am "$1"
@@ -114,7 +114,7 @@ au.git.branch.all(){
 }
 
 au.git.branch.new(){
-    ret=$(__is_empty_args $# "${FUNCNAME[0]} <branch_name>")
+    local ret=$(__is_empty_args $# "${FUNCNAME[0]} <branch_name>")
     if test "$ret" != "0"; then echo $ret; return; fi
 
     git branch $1
@@ -141,7 +141,7 @@ au.git.log.graph(){
 }
 
 au.git.rebase(){
-    ret=$(__is_empty_args $# "${FUNCNAME[0]} <branch_name>")    
+    local ret=$(__is_empty_args $# "${FUNCNAME[0]} <branch_name>")    
     if test "$ret" != "0"; then echo $ret; return; fi
 
     git rebase $1
@@ -184,14 +184,14 @@ au.git.reset(){
 }
 
 au.git.reset.hard(){
-    ret=$(__is_empty_args $# "${FUNCNAME[0]} <ID>")
+    local ret=$(__is_empty_args $# "${FUNCNAME[0]} <ID>")
     if test "$ret" != "0"; then echo $ret; return; fi
 
     git reset --hard $1
 }
 
 au.git.reset.soft(){
-    ret=$(__is_empty_args $# "${FUNCNAME[0]} <ID>")
+    local ret=$(__is_empty_args $# "${FUNCNAME[0]} <ID>")
     if test "$ret" != "0"; then echo $ret; return; fi
 
     git reset --soft $1

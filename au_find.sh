@@ -7,7 +7,7 @@
 # start
 
 au.find(){
-    ret=$(__is_empty_args $# "${FUNCNAME[0]} \"<pattern>\"")
+    local ret=$(__is_empty_args $# "${FUNCNAME[0]} \"<pattern>\"")
     if test "$ret" != "0"; then echo $ret; return; fi
 
     find . -name "$1"

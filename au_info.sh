@@ -19,7 +19,7 @@ au.info.memory(){
 }
 
 au.info.fsize(){
-    ret=$(__is_empty_args $# "${FUNCNAME[0]} <folder>")
+    local ret=$(__is_empty_args $# "${FUNCNAME[0]} <folder>")
     if test "$ret" != "0"; then echo $ret; return; fi
     
     du -sh $1

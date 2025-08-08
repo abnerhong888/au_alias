@@ -97,7 +97,7 @@ au.ls(){
 }
 
 au.watch(){
-    ret=$(__is_empty_args $# "${FUNCNAME[0]} <\"command\">")
+    local ret=$(__is_empty_args $# "${FUNCNAME[0]} <\"command\">")
     if test "$ret" != "0"; then echo $ret; return; fi
 
     watch -n 1 "$1"

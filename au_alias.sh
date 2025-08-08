@@ -2,7 +2,7 @@
 
 # define
 AU_ALIAS_DIR="/home/user/ws/mygit/au_alias"
-
+AU_CURR_FILE="au_alias.sh"
 # include 
 source "$AU_ALIAS_DIR/au_basic.sh"
 source "$AU_ALIAS_DIR/au_wifi.sh"
@@ -22,16 +22,28 @@ au.test(){
 }
 
 au.source.dir(){
-    echo $AU_ALIAS_DIR
+    if [ $AU_CURR_FILE == "au_alias.sh" ]; then
+        echo $AU_ALIAS_DIR
+    else
+        echo "[au_alias] error: source dir not found"
+    fi
 }
 
 au.source(){
-    SH_DIR="$AU_ALIAS_DIR/au_alias.sh"
+    local SH_DIR="$AU_ALIAS_DIR/$AU_CURR_FILE"
 
-    ret=$(__is_file $SH_DIR)
+    local ret=$(__is_file $SH_DIR)
     if test "$ret" != "0"; then echo $ret; return; fi
 
-    source $SH_DIR
+    if [ -f "$SH_DIR" ]; then
+        source $SH_DIR
+    else
+        echo "[au_alias] error: $SH_DIR not found"
+    fi
+}
+
+au.source.bashrc(){
+    source ~/.bashrc
 }
 
 # help
