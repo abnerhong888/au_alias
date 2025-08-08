@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# define
+
 # include 
 
 # start
@@ -31,3 +33,5 @@ au.grep.help(){
     echo "=== Help ==="
     echo "au.grep.help                       - Show this command list"
 }
+
+# end

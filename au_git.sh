@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# define
+
 # include 
 
 # start
@@ -260,3 +262,5 @@ au.git.help(){
     echo "=== Help ==="
     echo "au.git.help                       - Show this command list"
 }
+
+# end

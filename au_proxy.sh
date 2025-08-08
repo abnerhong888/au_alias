@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# define
+
 # include 
 
 # start
@@ -72,3 +74,5 @@ au.pxy.help(){
     echo "=== Help ==="
     echo "au.pxy.help                        - Show this command list"
 }
+
+# end

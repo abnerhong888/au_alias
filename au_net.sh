@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# define
+
 # include 
 
 if [ -f "au_wifi.sh" ]; then
@@ -74,3 +76,5 @@ au.net.help(){
     echo "=== Help ==="
     echo "au.net.help                      - Show this command list"
 }
+
+# end

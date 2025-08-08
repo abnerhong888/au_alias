@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# define
+
 # include 
 
 # start
@@ -27,3 +29,5 @@ au.clear.help(){
     echo "=== Help ==="
     echo "au.clear.help                      - Show this command list"
 }
+
+# end

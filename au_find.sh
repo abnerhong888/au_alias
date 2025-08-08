@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# define
+
 # include 
 
 # start
@@ -69,3 +71,5 @@ au.find.help(){
     echo "=== Help ==="
     echo "au.find.help                       - Show this command list"
 }
+
+# end

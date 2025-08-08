@@ -1,43 +1,32 @@
 #!/bin/bash
 
+# define
+AU_ALIAS_DIR="/home/user/ws/mygit/au_alias"
+
 # include 
-
-incs="au_basic.sh "
-incs+="au_wifi.sh "
-incs+="au_net.sh "
-incs+="au_proxy.sh "
-incs+="au_clear.sh "
-incs+="au_find.sh "
-incs+="au_grep.sh "
-incs+="au_tar.sh "
-incs+="au_tree.sh "
-incs+="au_info.sh "
-incs+="au_git.sh "
-
-for inc in $incs; do
-    if [ -f "$inc" ]; then
-        source "$inc"
-    fi
-done
+source "$AU_ALIAS_DIR/au_basic.sh"
+source "$AU_ALIAS_DIR/au_wifi.sh"
+source "$AU_ALIAS_DIR/au_net.sh"
+source "$AU_ALIAS_DIR/au_proxy.sh"
+source "$AU_ALIAS_DIR/au_clear.sh"
+source "$AU_ALIAS_DIR/au_find.sh"
+source "$AU_ALIAS_DIR/au_grep.sh"
+source "$AU_ALIAS_DIR/au_tar.sh"
+source "$AU_ALIAS_DIR/au_tree.sh"
+source "$AU_ALIAS_DIR/au_info.sh"
+source "$AU_ALIAS_DIR/au_git.sh"
 
 # start
-
 au.test(){
-    echo $incs
-    file="au_wifi.sh"
-    if [ -f "$file" ]; then
-        echo "$file"
-    fi
-
-    ret=$(__is_empty_args $# $0)
-    if test "$ret" != "0"; then echo $ret; return; fi
-
-    
     echo "autest"
 }
 
+au.source.dir(){
+    echo $AU_ALIAS_DIR
+}
+
 au.source(){
-    SH_DIR="/home/user/ws/mygit/au_alias/au_alias.sh"
+    SH_DIR="$AU_ALIAS_DIR/au_alias.sh"
 
     ret=$(__is_file $SH_DIR)
     if test "$ret" != "0"; then echo $ret; return; fi
@@ -45,20 +34,21 @@ au.source(){
     source $SH_DIR
 }
 
-au.fnmode(){
-    echo 2 | sudo tee /sys/module/hid_apple/parameters/fnmode
+# help
+au.help(){
+    echo "=== Help ==="
+    echo "au.basic.help                  - Show basic commands list"
+    echo "au.net.help                    - Show network commands list"
+    echo "au.proxy.help                  - Show proxy commands list"
+    echo "au.clear.help                  - Show clear commands list"
+    echo "au.find.help                   - Show find commands list"
+    echo "au.grep.help                   - Show grep commands list"
+    echo "au.tar.help                    - Show tar commands list"
+    echo "au.tree.help                   - Show tree commands list"
+    echo "au.info.help                   - Show info commands list"
+    echo "au.git.help                    - Show git commands list"
+    echo "au.wi.help                     - Show wifi commands list"
+    echo "au.help                        - Show this command list"
 }
 
-au.maxwin(){
-    SH_DIR="/home/user/scripts/maxwin.sh"
-
-    ret=$(__is_file $SH_DIR)
-    if test "$ret" != "0"; then echo $ret; return; fi
-
-    $SH_DIR
-}
-
-au.ssh(){
-    ssh user@192.168.61.28
-}
-
+# end
