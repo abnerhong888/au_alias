@@ -36,61 +36,83 @@ alias ........='cd ../../../../../../..'
 alias .........='cd ../../../../../../../..'
 
 au.ll(){
-    # List files with full path information
+    local red="\033[31m"
+    local reset="\033[0m"
+
+    # Function to process an ls output line and replace filename with full path
+    _au_ll_process_line() {
+        local dir="$1"
+        local line="$2"
+        # Extract filename (last field after space split)
+        local fname="${line##* }"
+        if [[ "$fname" != "." && "$fname" != ".." ]]; then
+            local abs_path
+            abs_path="$(realpath -- "$dir/$fname" 2>/dev/null)"
+            # Replace only at the end
+            echo "${line%"$fname"}$abs_path"
+        else
+            echo "$line"
+        fi
+    }
+
     if [ $# -eq 0 ]; then
-        # No arguments - list current directory with full paths
-        ls -la | sed "1d" | while read -r line; do
-            filename=$(echo "$line" | awk '{print $NF}')
-            if [ "$filename" != "." ] && [ "$filename" != ".." ]; then
-                echo "$line" | sed "s|$filename|$(pwd)/$filename|"
-            else
-                echo "$line"
-            fi
-        done
+        # Current directory
+        while IFS= read -r line; do
+            _au_ll_process_line "." "$line"
+        done < <(ls -la --color=always | tail -n +2)
     else
-        # With arguments - list specified paths
         for arg in "$@"; do
             if [ -d "$arg" ]; then
-                echo "Directory: $(realpath "$arg")"
-                ls -la "$arg" | sed "1d" | while read -r line; do
-                    filename=$(echo "$line" | awk '{print $NF}')
-                    if [ "$filename" != "." ] && [ "$filename" != ".." ]; then
-                        echo "$line" | sed "s|$filename|$(realpath "$arg")/$filename|"
-                    else
-                        echo "$line"
-                    fi
-                done
+                printf "Directory: %s\n" "$(realpath "$arg")"
+                while IFS= read -r line; do
+                    _au_ll_process_line "$arg" "$line"
+                done < <(ls -la --color=always -- "$arg" | tail -n +2)
             elif [ -f "$arg" ]; then
-                ls -la "$arg" | sed "s|$(basename "$arg")|$(realpath "$arg")|"
+                while IFS= read -r line; do
+                    _au_ll_process_line "$(dirname "$arg")" "$line"
+                done < <(ls -la --color=always -- "$arg")
             else
-                echo "[au_alias] error: $arg not found"
+                printf "%b[au_alias] error:%b %s not found\n" "$red" "$reset" "$arg"
             fi
         done
     fi
 }
 
 au.ls(){
-    # List files with full path information
+    local red="\033[31m"
+    local reset="\033[0m"
+
+    # Function to process an ls output line and replace filename with full path
+    _au_ll_process_line() {
+        local dir="$1"
+        local line="$2"
+        # Extract filename (last field after space split)
+        local fname="${line##* }"
+        
+        local abs_path
+        abs_path="$(realpath -- "$dir/$fname" 2>/dev/null)"
+        # Replace only at the end
+        echo "$abs_path"
+    }
+
     if [ $# -eq 0 ]; then
-        # No arguments - list current directory with full paths
-        ls -l | sed "1d" | while read -r line; do
-            filename=$(echo "$line" | awk '{print $NF}')
-            echo "$(pwd)/$filename"
-        done
+        # Current directory
+        while IFS= read -r line; do
+            _au_ll_process_line "." "$line"
+        done < <(ls -la --color=always | tail -n +2)
     else
-        # With arguments - list specified paths
         for arg in "$@"; do
             if [ -d "$arg" ]; then
-                echo "Directory: $(realpath "$arg")"
-                ls -l "$arg" | sed "1d" | while read -r line; do
-                    filename=$(echo "$line" | awk '{print $NF}')
-                    echo "$(pwd)/$filename"
-                done
+                printf "Directory: %s\n" "$(realpath "$arg")"
+                while IFS= read -r line; do
+                    _au_ll_process_line "$arg" "$line"
+                done < <(ls -la --color=always -- "$arg" | tail -n +2)
             elif [ -f "$arg" ]; then
-                filename=$(ls -l "$arg" | awk '{print $NF}')
-                echo "$(pwd)/$filename"
+                while IFS= read -r line; do
+                    _au_ll_process_line "$(dirname "$arg")" "$line"
+                done < <(ls -la --color=always -- "$arg")
             else
-                echo "[au_alias] error: $arg not found"
+                printf "%b[au_alias] error:%b %s not found\n" "$red" "$reset" "$arg"
             fi
         done
     fi

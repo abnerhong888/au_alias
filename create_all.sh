@@ -32,7 +32,7 @@ write_line "# define"
 
 get_lines define include $ALIAS_FILE >> $FILE_NAME
 
-sed -i s/au_alias.sh/au_alias_one.sh/ $FILE_NAME
+sed -i s/au_alias.sh/$FILE_NAME/ $FILE_NAME
 
 # get all sourced sh file define
 get_lines include start $ALIAS_FILE | while read -r line; do
