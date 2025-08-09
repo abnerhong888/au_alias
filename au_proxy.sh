@@ -76,42 +76,69 @@ au.pxy.vscode(){
     local ret=$(__is_empty_args $# "${FUNCNAME[0]} <user:password@ip>")
     if test "$ret" != "0"; then echo $ret; return; fi
 
-    if [ ! -d "/tmp/code" ]; then
-        mkdir -p /tmp/my_temp_code
-        cp ~/.config/Code/* /tmp/my_temp_code -rf
+    local TEMP_DIR="/tmp/my_temp_code"
+    local SETTING_FILE="$TEMP_DIR/User/settings.json"
+
+    if [ ! -d "$TEMP_DIR" ]; then
+        mkdir -p $TEMP_DIR
+        cp ~/.config/Code/* $TEMP_DIR -rf
     fi
 
     clear
-    __edit_settings $1 0
+    __edit_settings $1 1 $SETTING_FILE
 
-    code $2 --wait --user-data-dir=/tmp/my_temp_code
+    code $2 --wait --user-data-dir=$TEMP_DIR
     
-    __edit_settings $1 1
+    __edit_settings $1 0 $SETTING_FILE
+    history -c
+    clear
+}
+
+au.pxy.windsurf(){
+    local ret=$(__is_empty_args $# "${FUNCNAME[0]} <user:password@ip>")
+    if test "$ret" != "0"; then echo $ret; return; fi
+
+    local TEMP_DIR="/tmp/my_temp_windsurf"
+    local SETTING_FILE="$TEMP_DIR/User/settings.json"
+
+    if [ ! -d "$TEMP_DIR" ]; then
+        mkdir -p $TEMP_DIR
+        cp ~/.config/Windsurf/* $TEMP_DIR -rf
+    fi
+
+    clear
+    __edit_settings $1 1 $SETTING_FILE
+
+    windsurf $2 --wait --user-data-dir=$TEMP_DIR
+    
+    __edit_settings $1 0 $SETTING_FILE
     history -c
     clear
 }
 
 __edit_settings(){
-    local SETTING_FILE="/tmp/my_temp_code/User/settings.json"
-    
+    local IP_PASSWORD=$1
+    local ENABLE=$2
+    local SETTING_FILE=$3
+    # 0,/{/{...} - replace first { with {...}
     if ! grep -q '"http.proxyStrictSSL":' $SETTING_FILE; then
-        sed -i 's/{/{\n    "http.proxyStrictSSL": false,/' $SETTING_FILE
+        sed -i '0,/{/{s/{/{\n    "http.proxyStrictSSL": false,/}' $SETTING_FILE
     fi
     
     if ! grep -q '"http.proxy":' $SETTING_FILE; then
-        sed -i 's/{/{\n    "http.proxy": "",/' $SETTING_FILE
+        sed -i '0,/{/{s/{/{\n    "http.proxy": "",/}' $SETTING_FILE
     fi
 
-    local VAL="\"http://$1:3128\""  # Properly escaped quotes for JSON
+    local VAL="http://$IP_PASSWORD:3128"  # Properly escaped quotes for JSON
     local SEARCH_VAR='"http.proxy": "",'  # What to search for
     local REPLACE_VAR="\"http.proxy\": \"$VAL\","  # Replacement with variable
 
-    if [ "$2" = "0" ]; then
+    if [ "$ENABLE" = "1" ]; then
         # Enable proxy by replacing empty with value
-        sed -i "s|${SEARCH_VAR}|\"http.proxy\": ${VAL},|g" "$SETTING_FILE"
-    elif [ "$2" = "1" ]; then
+        sed -i "s|$SEARCH_VAR|$REPLACE_VAR|g" "$SETTING_FILE"
+    elif [ "$ENABLE" = "0" ]; then
         # Disable proxy by replacing value with empty
-        sed -i "s|\"http.proxy\": ${VAL},|${SEARCH_VAR}|g" "$SETTING_FILE"
+        sed -i "s|$REPLACE_VAR|$SEARCH_VAR|g" "$SETTING_FILE"
     fi
 }
 
