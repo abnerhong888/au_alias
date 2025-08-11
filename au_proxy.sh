@@ -21,7 +21,7 @@ au.pxy.grep(){
 }
 
 
-au.3pxy(){
+au.pxy.3proxy(){
     local PROXY_DIR="/home/user/ws/3proxy/bin"
     local PROXY_EXE="$PROXY_DIR/3proxy"
     local CFG_NAME="3proxy.cfg"
@@ -61,6 +61,42 @@ EOL
     # Cleanup if proxy exits normally
     rm $CFG_NAME -f
     clear
+}
+
+au.pxy.squid.start(){
+    sudo systemctl start squid.service    
+}
+
+au.pxy.squid.stop(){
+    sudo systemctl stop squid.service    
+}
+
+au.pxy.squid.status(){
+    sudo systemctl status squid.service    
+}
+
+au.pxy.squid.restart(){
+    sudo systemctl restart squid.service    
+}
+
+au.pxy.squid.enable(){
+    sudo systemctl enable squid.service    
+}
+
+au.pxy.squid.disable(){
+    sudo systemctl disable squid.service    
+}
+
+au.pxy.squid.log(){
+    sudo tail -f /var/log/squid/access.log
+}
+
+au.pxy.squid.config(){
+    cat "/etc/squid/squid.conf"
+}
+
+au.pxy.squid.config.dir(){
+    echo "/etc/squid/squid.conf"
 }
 
 au.pxy.chrome(){
@@ -116,6 +152,20 @@ au.pxy.windsurf(){
     clear
 }
 
+au.pxy.terminal(){
+    export http_proxy="http://$1:3128"
+    export https_proxy="http://$1:3128"
+    export ftp_proxy="http://$1:3128"
+    export no_proxy="localhost,127.0.0.1,::1"
+}
+
+au.pxy.terminal.unset(){
+    unset http_proxy
+    unset https_proxy
+    unset ftp_proxy
+    unset no_proxy
+}
+
 __edit_settings(){
     local IP_PASSWORD=$1
     local ENABLE=$2
@@ -148,8 +198,21 @@ au.pxy.help(){
     echo "=== Proxy Commands ==="
     echo "au.pxy.list <ip/24>                 - List open ports on a subnet"
     echo "au.pxy.grep <ip/24>                 - List open ports on a subnet and grep for open ports"
-    echo "au.3pxy <user> <password>           - Start 3proxy server with specified user and password"
-    echo "                                     Example: au.3pxy user password"
+    echo ""
+    echo "=== 3proxy ==="
+    echo "au.pxy.3proxy <user> <password>     - Start 3proxy server with specified user and password"
+    echo "                                     Example: au.pxy.3proxy user password"
+    echo ""
+    echo "=== Squid ==="
+    echo "au.pxy.squid.start                  - Start squid server"
+    echo "au.pxy.squid.stop                   - Stop squid server"
+    echo "au.pxy.squid.status                 - Show squid server status"
+    echo "au.pxy.squid.restart                - Restart squid server"
+    echo "au.pxy.squid.enable                 - Enable squid server to start on boot"
+    echo "au.pxy.squid.disable                - Disable squid server from starting on boot"
+    echo "au.pxy.squid.config                 - Show squid config"
+    echo "au.pxy.squid.config.dir             - Show squid config directory"
+    echo "au.pxy.squid.log                    - Show squid log"
     echo ""
     echo "=== Chrome ==="
     echo "au.pxy.chrome <user:password@ip>   - Open chrome with proxy"
@@ -159,6 +222,11 @@ au.pxy.help(){
     echo "au.pxy.vscode <user:password@ip>   - Open vscode with proxy"
     echo "                                     Example: au.pxy.vscode user:password@ip"
     echo ""
+    echo "=== Terminal ==="
+    echo "au.pxy.terminal <ip>                - Set proxy for terminal"
+    echo "                                     Example: au.pxy.terminal 192.168.1.1"
+    echo "au.pxy.terminal.unset              - Unset proxy for terminal"
+    echo "                                     Example: au.pxy.terminal.unset"
     echo "=== Help ==="
     echo "au.pxy.help                        - Show this command list"
 }

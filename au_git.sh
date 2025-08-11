@@ -72,7 +72,7 @@ au.git.add.modified(){
 }
 
 au.git.add.untracked(){
-    git add $(git ls-files -o)
+    git add $(git ls-files --others --exclude-standard)
 }
 
 au.git.commit(){
@@ -156,7 +156,11 @@ au.git.modified(){
 }
 
 au.git.untracked(){
-    git ls-files -o
+    git ls-files --others --exclude-standard
+}
+
+au.git.ignored(){
+    git ls-files --others --ignored --exclude-standard
 }
 
 au.git.diff(){
@@ -225,6 +229,7 @@ au.git.help(){
     echo "au.git.files                       - List tracked files"
     echo "au.git.modified                    - List modified files"
     echo "au.git.untracked                   - List untracked files"
+    echo "au.git.ignored                     - List ignored files"
     echo ""
     echo "=== Commit Operations ==="
     echo "au.git.commit <message>            - Commit with message"

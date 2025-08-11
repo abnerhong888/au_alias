@@ -49,14 +49,24 @@ au.net.reset(){
     au.wi.off
 }
 
-au.net.staticip(){
-    local ret=$(__is_empty_args $# "${FUNCNAME[0]} <device>")
+au.route(){
+    ip route
+}
+
+au.route.del(){
+    local ret=$(__is_empty_args $# "${FUNCNAME[0]} <ip/24> <device>")
     if test "$ret" != "0"; then echo $ret; return; fi
 
-    local GATWAY=$(nmcli -g IP4.GATEWAY device show "$1")
+    sudo ip route del $1 dev $2
+}
 
-    sudo ip route del default dev $1
-    sudo ip route add 192.168.0.0/16 via $GATWAY
+au.route.add(){
+    local ret=$(__is_empty_args $# "${FUNCNAME[0]} <ip/24> <device>")
+    if test "$ret" != "0"; then echo $ret; return; fi
+
+    local GATWAY=$(nmcli -g IP4.GATEWAY device show "$2")
+
+    sudo ip route add $1 via $GATWAY dev $2
 }
 
 # help
@@ -70,8 +80,11 @@ au.net.help(){
     echo "au.net.list                      - List all network connections"
     echo "au.net.recn                      - Reconnect to the current network"
     echo "au.net.reset                     - Reset the current WiFi connection"
-    echo "au.net.staticip <device>         - Set static IP for the specified device"
-    echo "                                     Example: au.net.staticip eth0"
+    echo ""
+    echo "=== Route ==="
+    echo "au.route                         - Show route table"
+    echo "au.route.del <ip/24> <device>     - Delete default route for the specified device"
+    echo "au.route.add <ip/24> <device>     - Add default route for the specified device"
     echo ""
     echo "=== Help ==="
     echo "au.net.help                      - Show this command list"
