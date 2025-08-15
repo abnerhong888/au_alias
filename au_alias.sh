@@ -15,6 +15,7 @@ source "$AU_ALIAS_DIR/au_tar.sh"
 source "$AU_ALIAS_DIR/au_tree.sh"
 source "$AU_ALIAS_DIR/au_info.sh"
 source "$AU_ALIAS_DIR/au_git.sh"
+source "$AU_ALIAS_DIR/au_diff.sh"
 
 # start
 au.test(){
@@ -59,6 +60,7 @@ au.help(){
     echo "au.tree.help                   - Show tree commands list"
     echo "au.info.help                   - Show info commands list"
     echo "au.git.help                    - Show git commands list"
+    echo "au.diff.help                   - Show diff commands list"
     echo "au.wi.help                     - Show wifi commands list"
     echo "au.help                        - Show this command list"
     echo "au.help.all                    - Show help ofall commands list"
@@ -76,6 +78,7 @@ au.help.all(){
     au.tree.help
     au.info.help
     au.git.help
+    au.diff.help
     au.wi.help
 }
 
