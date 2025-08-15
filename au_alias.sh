@@ -61,6 +61,22 @@ au.help(){
     echo "au.git.help                    - Show git commands list"
     echo "au.wi.help                     - Show wifi commands list"
     echo "au.help                        - Show this command list"
+    echo "au.help.all                    - Show help ofall commands list"
+}
+
+au.help.all(){
+    au.help
+    au.basic.help
+    au.net.help
+    au.proxy.help
+    au.clear.help
+    au.find.help
+    au.grep.help
+    au.tar.help
+    au.tree.help
+    au.info.help
+    au.git.help
+    au.wi.help
 }
 
 # end
