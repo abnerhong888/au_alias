@@ -19,11 +19,19 @@ au.diff.folder(){
     diff -ru --color=always "$1" "$2"
 }
 
+au.diff.list(){
+    local ret=$(__is_empty_args $# "${FUNCNAME[0]} <folder1> <folder2>")
+    if test "$ret" != "0"; then echo $ret; return; fi
+
+    diff -rq "$1" "$2"
+}
+
 # help
 au.diff.help(){
     echo "=== Diff Commands ==="
     echo "au.diff.file <file1> <file2>      - Diff two files"
     echo "au.diff.folder <folder1> <folder2> - Diff two folders"
+    echo "au.diff.list <folder1> <folder2>   - List diff files"
     echo ""
     echo "=== Help ==="
     echo "au.diff.help                       - Show this command list"
