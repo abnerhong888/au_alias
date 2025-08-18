@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FILE_NAME="au_alias_one.sh"
+FILE_NAME=".au_alias_one"
 DESTINATION="$HOME"
 DEST_FILE="$HOME/.bashrc"
 

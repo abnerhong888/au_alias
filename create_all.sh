@@ -2,7 +2,7 @@
 
 # create all .sh file into one au_alias_one.sh from source of sh in au_alias.sh
 
-FILE_NAME="au_alias_one.sh"
+FILE_NAME=".au_alias_one"
 ALIAS_FILE="au_alias.sh"
 
 get_line(){
@@ -74,3 +74,5 @@ done
 
 write_line ""
 write_line "# end"
+
+echo ".au_alias_one.sh created"
