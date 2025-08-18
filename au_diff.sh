@@ -26,12 +26,39 @@ au.diff.list(){
     diff -rq "$1" "$2"
 }
 
+au.diff.list2(){
+    local ret=$(__is_empty_args $# "${FUNCNAME[0]} <folder1> <folder2>")
+    if test "$ret" != "0"; then echo $ret; return; fi
+
+    diff -rq "$1" "$2" | while read -r line; do
+        echo "$line" | sed 's/ and / /; s/ differ//'
+    done
+}
+
+au.diff.vscode(){
+    local ret=$(__is_empty_args $# "${FUNCNAME[0]} <file1> <file2>")
+    if test "$ret" != "0"; then echo $ret; return; fi
+
+    code --diff "$1" "$2"
+}
+
+au.diff.windsurf(){
+    local ret=$(__is_empty_args $# "${FUNCNAME[0]} <file1> <file2>")
+    if test "$ret" != "0"; then echo $ret; return; fi
+
+    windsurf --diff "$1" "$2"
+}
+
+
 # help
 au.diff.help(){
     echo "=== Diff Commands ==="
     echo "au.diff.file <file1> <file2>      - Diff two files"
     echo "au.diff.folder <folder1> <folder2> - Diff two folders"
     echo "au.diff.list <folder1> <folder2>   - List diff files"
+    echo "au.diff.list2 <folder1> <folder2>  - List diff files (without 'and' and 'differ')"
+    echo "au.diff.vscode <file1> <file2>    - Diff two files with vscode"
+    echo "au.diff.windsurf <file1> <file2>  - Diff two files with windsurf"
     echo ""
     echo "=== Help ==="
     echo "au.diff.help                       - Show this command list"
