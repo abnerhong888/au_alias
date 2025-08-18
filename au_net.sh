@@ -64,9 +64,9 @@ au.route.add(){
     local ret=$(__is_empty_args $# "${FUNCNAME[0]} <ip/24> <device>")
     if test "$ret" != "0"; then echo $ret; return; fi
 
-    local GATWAY=$(nmcli -g IP4.GATEWAY device show "$2")
+    local GATEWAY=$(nmcli -g IP4.GATEWAY device show "$2")
 
-    sudo ip route add $1 via $GATWAY dev $2
+    sudo ip route add $1 via $GATEWAY dev $2
 }
 
 # help
