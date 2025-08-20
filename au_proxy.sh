@@ -100,16 +100,16 @@ au.pxy.squid.config.dir(){
 }
 
 au.pxy.chrome(){
-    local ret=$(__is_empty_args $# "${FUNCNAME[0]} <user:password@ip>")
+    local ret=$(__is_empty_args $# "${FUNCNAME[0]} <ip:port>")
     if test "$ret" != "0"; then echo $ret; return; fi
 
-    google-chrome --proxy-server="http://$1:3128"
+    google-chrome --proxy-server="http://$1"
     history -c
     clear
 }
 
 au.pxy.vscode(){
-    local ret=$(__is_empty_args $# "${FUNCNAME[0]} <user:password@ip>")
+    local ret=$(__is_empty_args $# "${FUNCNAME[0]} <user:password@ip:port>")
     if test "$ret" != "0"; then echo $ret; return; fi
 
     local TEMP_DIR="/tmp/my_temp_code"
@@ -131,7 +131,7 @@ au.pxy.vscode(){
 }
 
 au.pxy.windsurf(){
-    local ret=$(__is_empty_args $# "${FUNCNAME[0]} <user:password@ip>")
+    local ret=$(__is_empty_args $# "${FUNCNAME[0]} <user:password@ip:port>")
     if test "$ret" != "0"; then echo $ret; return; fi
 
     local TEMP_DIR="/tmp/my_temp_windsurf"
@@ -153,9 +153,9 @@ au.pxy.windsurf(){
 }
 
 au.pxy.terminal(){
-    export http_proxy="http://$1:3128"
-    export https_proxy="http://$1:3128"
-    export ftp_proxy="http://$1:3128"
+    export http_proxy="http://$1"
+    export https_proxy="http://$1"
+    export ftp_proxy="http://$1"
     export no_proxy="localhost,127.0.0.1,::1"
 }
 
@@ -167,7 +167,7 @@ au.pxy.terminal.unset(){
 }
 
 __edit_settings(){
-    local IP_PASSWORD=$1
+    local IP_PASSWORD_PORT=$1
     local ENABLE=$2
     local SETTING_FILE=$3
     # 0,/{/{...} - replace first { with {...}
@@ -179,7 +179,7 @@ __edit_settings(){
         sed -i '0,/{/{s/{/{\n    "http.proxy": "",/}' $SETTING_FILE
     fi
 
-    local VAL="http://$IP_PASSWORD:3128"  # Properly escaped quotes for JSON
+    local VAL="http://$IP_PASSWORD_PORT"  # Properly escaped quotes for JSON
     local SEARCH_VAR='"http.proxy": "",'  # What to search for
     local REPLACE_VAR="\"http.proxy\": \"$VAL\","  # Replacement with variable
 
@@ -215,16 +215,19 @@ au.pxy.help(){
     echo "au.pxy.squid.log                    - Show squid log"
     echo ""
     echo "=== Chrome ==="
-    echo "au.pxy.chrome <user:password@ip>   - Open chrome with proxy"
-    echo "                                     Example: au.pxy.chrome user:password@ip"
+    echo "au.pxy.chrome <user:password@ip:port>   - Open chrome with proxy"
+    echo "                                     Example: au.pxy.chrome ip:port"
     echo ""
     echo "=== VSCode ==="
-    echo "au.pxy.vscode <user:password@ip>   - Open vscode with proxy"
-    echo "                                     Example: au.pxy.vscode user:password@ip"
+    echo "au.pxy.vscode <user:password@ip:port>   - Open vscode with proxy"
+    echo "                                     Example: au.pxy.vscode user:password@ip:port"
+    echo "=== Windsurf ==="
+    echo "au.pxy.windsurf <user:password@ip:port>   - Open windsurf with proxy"
+    echo "                                     Example: au.pxy.windsurf user:password@ip:port"
     echo ""
     echo "=== Terminal ==="
-    echo "au.pxy.terminal <ip>                - Set proxy for terminal"
-    echo "                                     Example: au.pxy.terminal 192.168.1.1"
+    echo "au.pxy.terminal <ip:port>                - Set proxy for terminal"
+    echo "                                     Example: au.pxy.terminal ip:port"
     echo "au.pxy.terminal.unset              - Unset proxy for terminal"
     echo "                                     Example: au.pxy.terminal.unset"
     echo "=== Help ==="
