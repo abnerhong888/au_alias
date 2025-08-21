@@ -17,7 +17,7 @@ au.pxy.grep(){
     local ret=$(__is_empty_args $# "${FUNCNAME[0]} <ip/24>")
     if test "$ret" != "0"; then echo $ret; return; fi
 
-    nmap -p 3128,8080,8888,1080 $1 | grep -E 'Nmap scan report|open'
+    nmap -p 3128,8080,8888,1080 $1 | grep -E 'Nmap scan report|open|filtered'
 }
 
 
