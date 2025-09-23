@@ -9,7 +9,7 @@ if [ ! -f "$FILE_NAME" ]; then
     return
 fi
 
-cp "$FILE_NAME" "$DESTINATION"
+cp -v "$FILE_NAME" "$DESTINATION"
 
 if ! grep -q "source ~/$FILE_NAME" $DEST_FILE; then
     echo "" >> $DEST_FILE

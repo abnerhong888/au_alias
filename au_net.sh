@@ -49,26 +49,6 @@ au.net.reset(){
     au.wi.off
 }
 
-au.route(){
-    ip route
-}
-
-au.route.del(){
-    local ret=$(__is_empty_args $# "${FUNCNAME[0]} <ip/24> <device>")
-    if test "$ret" != "0"; then echo $ret; return; fi
-
-    sudo ip route del $1 dev $2
-}
-
-au.route.add(){
-    local ret=$(__is_empty_args $# "${FUNCNAME[0]} <ip/24> <device>")
-    if test "$ret" != "0"; then echo $ret; return; fi
-
-    local GATEWAY=$(nmcli -g IP4.GATEWAY device show "$2")
-
-    sudo ip route add $1 via $GATEWAY dev $2
-}
-
 # help
 au.net.help(){
     echo "=== Network Commands ==="
@@ -80,11 +60,6 @@ au.net.help(){
     echo "au.net.list                      - List all network connections"
     echo "au.net.recn                      - Reconnect to the current network"
     echo "au.net.reset                     - Reset the current WiFi connection"
-    echo ""
-    echo "=== Route ==="
-    echo "au.route                         - Show route table"
-    echo "au.route.del <ip/24> <device>     - Delete default route for the specified device"
-    echo "au.route.add <ip/24> <device>     - Add default route for the specified device"
     echo ""
     echo "=== Help ==="
     echo "au.net.help                      - Show this command list"

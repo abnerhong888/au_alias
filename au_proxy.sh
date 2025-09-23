@@ -20,7 +20,6 @@ au.pxy.grep(){
     nmap -p 3128,8080,8888,1080 $1 | grep -E 'Nmap scan report|open|filtered'
 }
 
-
 au.pxy.3proxy(){
     local PROXY_DIR="/home/user/ws/3proxy/bin"
     local PROXY_EXE="$PROXY_DIR/3proxy"

@@ -47,18 +47,18 @@ au.wi.info(){
 
 au.wi.recn(){
     local WIFI_NAME="$(au.wi.name)"
-    sudo nmcli connection down "$WIFI_NAME" && nmcli connection up "$WIFI_NAME"
+    nmcli connection down "$WIFI_NAME" && nmcli connection up "$WIFI_NAME"
 }
 
 au.wi.lowp(){
     local WIFI_NAME="$(au.wi.name)"
-    sudo nmcli connection modify "$WIFI_NAME" ipv4.route-metric 99999
+    nmcli connection modify "$WIFI_NAME" ipv4.route-metric 99999
     au.wi.recn
 }
 
 au.wi.lowp.reset(){
     local WIFI_NAME="$(au.wi.name)"
-    sudo nmcli connection modify "$WIFI_NAME" ipv4.route-metric 600
+    nmcli connection modify "$WIFI_NAME" ipv4.route-metric 600
     au.wi.recn
 }
 

@@ -7,6 +7,7 @@ AU_CURR_FILE="au_alias.sh"
 source "$AU_ALIAS_DIR/au_basic.sh"
 source "$AU_ALIAS_DIR/au_wifi.sh"
 source "$AU_ALIAS_DIR/au_net.sh"
+source "$AU_ALIAS_DIR/au_route.sh"
 source "$AU_ALIAS_DIR/au_proxy.sh"
 source "$AU_ALIAS_DIR/au_clear.sh"
 source "$AU_ALIAS_DIR/au_find.sh"
@@ -52,6 +53,7 @@ au.help(){
     echo "=== Help ==="
     echo "au.basic.help                  - Show basic commands list"
     echo "au.net.help                    - Show network commands list"
+    echo "au.route.help                  - Show route commands list"
     echo "au.proxy.help                  - Show proxy commands list"
     echo "au.clear.help                  - Show clear commands list"
     echo "au.find.help                   - Show find commands list"
@@ -70,6 +72,7 @@ au.help.all(){
     au.help
     au.basic.help
     au.net.help
+    au.route.help
     au.proxy.help
     au.clear.help
     au.find.help
