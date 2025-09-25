@@ -22,3 +22,5 @@ if ! grep -q "source ~/$FILE_NAME" $DEST_FILE; then
 else
     echo "[au_alias] already added to $DEST_FILE"
 fi
+
+source ~/.bashrc
