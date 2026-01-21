@@ -14,7 +14,7 @@ au.grep(){
     
     if [ $# -ge 2 ]; then path="$2"; fi
     
-    grep -ZnrE $1 $path
+    grep -ZnrE "$1" $path
 }
 
 au.grep.ext(){
@@ -25,7 +25,7 @@ au.grep.ext(){
     
     if [ $# -ge 3 ]; then path="$3"; fi
     
-    grep -ZnrE --include=\*$1 $2 $path
+    grep -ZnrE --include=\*"$1" "$2" $path
 }
 
 # help
